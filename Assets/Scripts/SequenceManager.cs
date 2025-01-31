@@ -136,6 +136,8 @@ public class SequenceManager : MonoBehaviour {
   
   // Target area where targets are spawned
   public TargetArea targetArea;
+
+  public AudioSource audioSource;
   
   // State getters
   public RunIdentification CurrentRunIdentification { get {return currentRunId; }}
@@ -214,6 +216,21 @@ public class SequenceManager : MonoBehaviour {
   
   void Update() {
     stateMachine.CurrentState().InvokeOnUpdate();
+
+    // Adjust audio volume based on distance to the nearest target
+    if (targetArea.objects.Count > 0)
+    {
+        float minDistance = float.MaxValue;
+        foreach (var target in targetArea.objects.Values)
+        {
+            float distance = Vector3.Distance(_marker.position, target.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+            }
+        }
+        audioSource.volume = Mathf.Clamp(1 / (minDistance + 1), 0, 1); // Adding 1 to avoid division by zero
+    }
   }
 
   public void RecordSpawn(Target target) 
@@ -245,6 +262,10 @@ public class SequenceManager : MonoBehaviour {
     else {
       lastHitVelocity = velocity.z;  //use forward velocity for all other conditions
     }
+
+    // Adjust audio volume based on distance to target
+    float distance = Vector3.Distance(_marker.position, target.transform.position);
+    audioSource.volume = Mathf.Clamp(1 / (distance + 1), 0, 1); // Adding 1 to avoid division by zero
   }
 
   public void RecordContact(Target target, Vector3 velocity)
@@ -270,6 +291,10 @@ public class SequenceManager : MonoBehaviour {
     else {
       lastContactVelocity = velocity.z;  //use forward velocity for all other conditions
     }
+
+    // Adjust audio volume based on distance to target
+    float distance = Vector3.Distance(_marker.position, target.transform.position);
+    audioSource.volume = Mathf.Clamp(1 / (distance + 1), 0, 1); // Adding 1 to avoid division by zero
   }
   
   public void RecordMiss(Target target)

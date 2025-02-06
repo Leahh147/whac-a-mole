@@ -1,0 +1,40 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name":"Python Debugger: Current File with Arguments",
+            "type":"debugpy",
+            "request":"launch",
+            "program":"${file}",
+            "console":"integratedTerminal",
+            "args":["${command:pickArgs}"]
+        },
+        {
+            "name": "Python Debugger: Evaluator",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "uitb/test/evaluator_config.py",
+            "cwd": "c:/Users/BFW/Documents/vscode/uitb_private",
+            "python": "C:/Users/BFW/anaconda3/envs/uitb-sim2vr/python.exe",
+            "console": "integratedTerminal",
+            "args": [
+                "uitb/configs/mobl_arms_whacamole_constrained_win_DEBUG.yaml"
+            ]
+        },
+        {
+            "name": "Python Debugger: Trainer",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "uitb/train/trainer.py",
+            "cwd": "c:/Users/BFW/Documents/vscode/uitb_private",
+            "python": "C:/Users/BFW/anaconda3/envs/uitb-sim2vr/python.exe",
+            "console": "integratedTerminal",
+            "args": [
+                "uitb/configs/mobl_arms_whacamole_constrained_win_DEBUG.yaml"
+            ]
+        }
+    ]
+}

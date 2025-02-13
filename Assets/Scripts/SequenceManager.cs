@@ -207,6 +207,7 @@ public class SequenceManager : MonoBehaviour {
     // Initialise state machine
     InitStateMachine();
     stateMachine.State(stateMachine.currentState).InvokeOnEnter();
+
   }
   
   void FixedUpdate()

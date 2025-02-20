@@ -9,7 +9,8 @@ public class TargetArea : MonoBehaviour
     public Target target;
     public Bomb bomb;
     public Replayer replayer;
-    public AudioSource audioSource;
+    // public AudioSource audioSource;
+    public Audio audioManager;
     private float _spawnBan;
     private float _bombSpawnBan;
     private PlayParameters _playParameters;
@@ -235,8 +236,7 @@ public class TargetArea : MonoBehaviour
             _gridID[gridPos.Item1, gridPos.Item2]);
 
         // Set the position of the AudioSource to match the new target's position
-        audioSource.transform.position = newTarget.transform.position;
-        
+        audioManager.m_AudioSource.transform.position = newTarget.transform.position;
         // Sample life span
         newTarget.LifeSpan = SampleLifeSpan();
 

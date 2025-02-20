@@ -68,7 +68,7 @@ namespace WhacAMole.Scripts.Audio
         }
         [SerializeField]
         [Tooltip("The signal type (mono or stereo) to use for the sensor.")]
-        private SignalType m_SignalType = SignalType.Stereo;
+        private SignalType m_SignalType = SignalType.Mono;
 
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace WhacAMole.Scripts.Audio
         }
         [SerializeField]
         [Tooltip("The sample type (amplitude or spectrum) to use for the sensor.")]
-        private SampleType m_SampleType = SampleType.Spectrum;
+        private SampleType m_SampleType = SampleType.Amplitude;
 
 
         /// <summary>
@@ -224,7 +224,13 @@ namespace WhacAMole.Scripts.Audio
 
         /// <inheritdoc/>
         /// <see cref="IAudioSampler"/>
-        public bool SamplingEnabled { get; set; }
+        public bool SamplingEnabled 
+        { 
+            get {return m_samplingEnabled;}
+            set {m_samplingEnabled = value;}
+        }
+        [SerializeField]
+        private bool m_samplingEnabled = true;
 
         /// <summary>
         /// Flag indicating whether any clipping occurred during the latest sample call.
@@ -289,7 +295,7 @@ namespace WhacAMole.Scripts.Audio
 
 
         /// <inheritdoc/>
-        public override ISensor[] CreateSensors()
+        public override ISensor[] CreateSensors() // Used in Simulated User
         {
             Sensor = new AudioSensor(m_Shape, m_CompressionType, SensorName);
             Sensor.ResetEvent += OnSensorReset;
@@ -299,7 +305,7 @@ namespace WhacAMole.Scripts.Audio
         /// <summary>
         /// Cleans up internal objects.
         /// </summary>
-        public void Dispose()
+        public void Dispose() // Any functions related to Academy/Agent are not needed
         {
             if (Academy.IsInitialized)
             {
@@ -315,15 +321,28 @@ namespace WhacAMole.Scripts.Audio
         private void Awake()
         {
             UpdateSettings();
-            Academy.Instance.AgentPreStep += OnAgentPreStep;
+            // Academy.Instance.AgentPreStep += OnAgentPreStep;
         }
         
-        private void OnDestroy()
+        public void OnDestroy()
         {
             Dispose();
         }
 
+        // Not needed for uitb
         private void OnAgentPreStep(int academyStepCount)
+        {
+            if (SamplingEnabled && Sensor != null)
+            {
+                Sensor.Buffer.SetChannel(m_SamplingStepCount);
+                SampleAudio();
+                SamplingUpdateEvent?.Invoke(m_SamplingStepCount, m_SamplingStepCount == m_BufferLength - 1);
+                m_SamplingStepCount = ++m_SamplingStepCount % m_BufferLength;
+            }
+        }
+
+        // Called in Simulated User
+        public void SampleAudioinSimulatedUser()
         {
             if (SamplingEnabled && Sensor != null)
             {
@@ -671,7 +690,7 @@ namespace WhacAMole.Scripts.Audio
             }
         }
 
-        private void SampleAmplitudeMono()
+        private void SampleAmplitudeMono() // currently sampling at 48kHz (windows)
         {
             AudioListener.GetOutputData(m_SamplesL, 0);
             AudioListener.GetOutputData(m_SamplesR, 1);

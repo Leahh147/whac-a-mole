@@ -68,7 +68,7 @@ namespace WhacAMole.Scripts.Audio
         }
         [SerializeField]
         [Tooltip("The signal type (mono or stereo) to use for the sensor.")]
-        private SignalType m_SignalType = SignalType.Mono;
+        public SignalType m_SignalType = SignalType.Mono;
 
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace WhacAMole.Scripts.Audio
         }
         [SerializeField]
         [Tooltip("The sample type (amplitude or spectrum) to use for the sensor.")]
-        private SampleType m_SampleType = SampleType.Amplitude;
+        public SampleType m_SampleType = SampleType.Amplitude;
 
 
         /// <summary>
@@ -320,8 +320,9 @@ namespace WhacAMole.Scripts.Audio
 
         private void Awake()
         {
-            UpdateSettings();
-            // Academy.Instance.AgentPreStep += OnAgentPreStep;
+            if (Globals.Instance.simulatedUser.audioModeOn){ // needs adjustment because there might not be a simulated user
+                UpdateSettings();
+            }
         }
         
         public void OnDestroy()
@@ -466,10 +467,11 @@ namespace WhacAMole.Scripts.Audio
 
         public void OnValidate()
         {
-            UpdateSettings();
+            // UpdateSettings();
+            Debug.Log("OnValidate");
         }
 
-        private void UpdateSettings()
+        public void UpdateSettings()
         {
             switch (m_SampleType)
             {

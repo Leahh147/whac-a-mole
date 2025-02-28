@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using WhacAMole.Scripts.Audio;
 
 namespace UserInTheBox
 {
@@ -10,6 +11,7 @@ namespace UserInTheBox
         // This class implements the RL environment for the Whacamole game.
 
         public SequenceManager sequenceManager;
+        // public AudioManager audioManager;
         [SerializeField] private Func<float, float> _distRewardFunc;
         [SerializeField] private bool _useRewardSplines=false;
         private float _previousPoints, _initialPoints, _previousContacts, _initialContacts, _elapsedTimeScaled;
@@ -63,6 +65,14 @@ namespace UserInTheBox
                 _logging = UitBUtils.GetOptionalArgument("logging");
                 sequenceManager.adaptiveTargetSpawns = UitBUtils.GetOptionalArgument("adaptive");
                 _denseGameReward = !UitBUtils.GetOptionalArgument("sparse");
+                simulatedUser.audioModeOn = UitBUtils.GetOptionalArgument("audioModeOn");
+                if (simulatedUser.audioModeOn) { // needs changes!!somehow the optional keywords are not imported
+                    string signalType_ = UitBUtils.GetOptionalKeywordArgument("signalType", "Mono");
+                    string sampleType_ = UitBUtils.GetOptionalKeywordArgument("sampleType", "Amplitude");
+                    audioManager.SignalType = signalType_;
+                    audioManager.SampleType = sampleType_;
+                    Debug.Log("Audio mode on, using signal type " + audioManager.SignalType + " and sample type " + audioManager.SampleType);
+                }
 
                 string fixedSeed = UitBUtils.GetOptionalKeywordArgument("fixedSeed", "0");
                 // Try to parse given fixed seed string to int
@@ -75,10 +85,16 @@ namespace UserInTheBox
             }
             else
             {
-                _condition = "medium";  //"random";
+                _condition = "easy";  // set to easy for debugging;
                 _denseGameReward = true;
                 _fixedSeed = 0;
                 _logging = false;
+                simulatedUser.audioModeOn = true;
+                if (simulatedUser.audioModeOn) {
+                    audioManager.SignalType = "Mono";
+                    audioManager.SampleType = "Spectrum";
+                    Debug.Log("Audio mode on, using signal type " + audioManager.SignalType + " and sample type " + audioManager.SampleType);
+                }
             }
             Debug.Log("RLEnv set to condition " + _condition);
 

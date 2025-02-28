@@ -137,8 +137,7 @@ public class SequenceManager : MonoBehaviour {
   // Target area where targets are spawned
   public TargetArea targetArea;
 
-  // public AudioSource audioSource;
-  public Audio audioManager;  
+  public AudioManager audioManager;  
   // State getters
   public RunIdentification CurrentRunIdentification { get {return currentRunId; }}
   
@@ -230,7 +229,9 @@ public class SequenceManager : MonoBehaviour {
                 minDistance = distance;
             }
         }
-        audioManager.m_AudioSource.volume = Mathf.Clamp(1 / (minDistance + 1), 0, 1); // Adding 1 to avoid division by zero
+        if (Globals.Instance.simulatedUser.audioModeOn) {
+          audioManager.m_AudioSource.volume = Mathf.Clamp(1 / (minDistance + 1), 0, 1); // Adding 1 to avoid division by zero
+        }
     }
   }
 
@@ -266,7 +267,9 @@ public class SequenceManager : MonoBehaviour {
 
     // Adjust audio volume based on distance to target
     float distance = Vector3.Distance(_marker.position, target.transform.position);
-    audioManager.m_AudioSource.volume = Mathf.Clamp(1 / (distance + 1), 0, 1); // Adding 1 to avoid division by zero
+    if (Globals.Instance.simulatedUser.audioModeOn) {
+      audioManager.m_AudioSource.volume = Mathf.Clamp(1 / (distance + 1), 0, 1); // Adding 1 to avoid division by zero
+    }
   }
 
   public void RecordContact(Target target, Vector3 velocity)
@@ -295,7 +298,9 @@ public class SequenceManager : MonoBehaviour {
 
     // Adjust audio volume based on distance to target
     float distance = Vector3.Distance(_marker.position, target.transform.position);
-    audioManager.m_AudioSource.volume = Mathf.Clamp(1 / (distance + 1), 0, 1); // Adding 1 to avoid division by zero
+    if (Globals.Instance.simulatedUser.audioModeOn) {
+      audioManager.m_AudioSource.volume = Mathf.Clamp(1 / (distance + 1), 0, 1); // Adding 1 to avoid division by zero
+    }
   }
   
   public void RecordMiss(Target target)

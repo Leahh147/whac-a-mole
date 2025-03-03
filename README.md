@@ -39,3 +39,5 @@ The following participant information is available in the spreadsheet:
 ## Troubleshooting
 
 When building, if you get an error complaining something about erroneous "guid" for some prefabs/meshes go to "Assets" -> "Reimport all"
+
+If you want to add more modes, please note that the Update function of SequenceManager runs before the Awake functions of some of the game objects. Add necessary checks to make sure there is no error in the Unity editor before training.

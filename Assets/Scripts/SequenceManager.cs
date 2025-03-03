@@ -218,7 +218,7 @@ public class SequenceManager : MonoBehaviour {
     stateMachine.CurrentState().InvokeOnUpdate();
 
     // Adjust audio volume based on distance to the nearest target
-    if (targetArea.objects.Count > 0)
+    if (targetArea.objects?.Count > 0)
     {
         float minDistance = float.MaxValue;
         foreach (var target in targetArea.objects.Values)

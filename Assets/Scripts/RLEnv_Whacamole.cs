@@ -65,14 +65,6 @@ namespace UserInTheBox
                 _logging = UitBUtils.GetOptionalArgument("logging");
                 sequenceManager.adaptiveTargetSpawns = UitBUtils.GetOptionalArgument("adaptive");
                 _denseGameReward = !UitBUtils.GetOptionalArgument("sparse");
-                simulatedUser.audioModeOn = UitBUtils.GetOptionalArgument("audioModeOn");
-                if (simulatedUser.audioModeOn) { // needs changes!!somehow the optional keywords are not imported
-                    string signalType_ = UitBUtils.GetOptionalKeywordArgument("signalType", "Mono");
-                    string sampleType_ = UitBUtils.GetOptionalKeywordArgument("sampleType", "Amplitude");
-                    audioManager.SignalType = signalType_;
-                    audioManager.SampleType = sampleType_;
-                    Debug.Log("Audio mode on, using signal type " + audioManager.SignalType + " and sample type " + audioManager.SampleType);
-                }
 
                 string fixedSeed = UitBUtils.GetOptionalKeywordArgument("fixedSeed", "0");
                 // Try to parse given fixed seed string to int

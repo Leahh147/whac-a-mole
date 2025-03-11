@@ -1,3 +1,58 @@
+# User-in-the-Box iib project
+This part of the repository aims to provide help to train the simulators on university HPC.
+
+## Use conda env and Install Dependencies
+First, under your working directory, clone the uitb_private and whac-a-mole repo respectively. The `uitb_private` repo is currently private, and if you need to clone it please contact `jh2425@cam.ac.uk` or Jiahao He in Teams. There's a submodule in whac-a-mole, called sim2vr. To pull the files, use the command below.
+```bash
+https://github.com/Leahh147/whac-a-mole.git --recurse-submodules
+https://github.com/Leahh147/uitb_private.git
+```
+
+If you have already cloned `whac-a-mole` without the submodules, you can do the following step instead.
+```bash
+git submodule update --init --recursive
+```
+
+Switch to branch `iib_project` for both repo. Under `whac-a-mole/Assets/sim2vr`, switch to branch `iib_project` as well. This ensures all the changes are up-to-date.
+For sim2vr:
+```bash
+cd whac-a-mole/Assets/sim2vr
+```
+
+```bash
+git checkout iib_project
+```
+
+Then create a new conda env for the project using python 3.10.
+```bash
+conda init
+conda create -n uitb-sim2vr python=3.10
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+conda activate uitb-sim2vr
+pip install -e .
+```
+
+## Initiate a Training Script and Submit to the HPC Centre
+Write a bash file for task submission, and note that you will need to apply for HPC resources in advance, especially the GPU node in Prof.Krestensson's group.
+```bash
+#! /bin/bash
+#SBATCH -A KRISTENSSON-SL3-GPU
+#SBATCH -p ampere  ##SBATCH -p icelake-himem
+#SBATCH -J uitb_train
+#SBATCH --nodes=1
+#SBATCH --time=00:15:00
+#SBATCH -o "HPC_%x.%j.out"
+#SBATCH -e "HPC_%x.%j.out"
+#SBATCH --gres=gpu:1   #requires "#SBATCH -A KRISTENSSON-SL3-GPU" and "#SBATCH -p ampere"
+
+cd ~/YOUR/OWN/PATH/TO/uitb_private
+
+python uitb/train/trainer.py uitb/configs/mobl_arms_whacamole_constrained.yaml > train_results_TIME.txt
+```
+
+## Questions
+If there's any question, please ask Jiahao He `jh2425@cam.ac.uk`.
+
 # Whac-A-Mole
 
 A replication of the classic "Whac-A-Mole" arcade game, implemented as a VR game in Unity. This game is largely based on another Unity (boxing) exergame developed by Toni Pesola. 

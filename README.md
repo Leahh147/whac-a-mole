@@ -2,7 +2,7 @@
 This part of the repository aims to provide help to train the simulators on university HPC.
 
 ## Use conda env and Install Dependencies
-First, under your working directory, clone the uitb_private and whac-a-mole repo respectively. The `uitb_private` repo is currently private, and if you need to clone it please contact `jh2425@cam.ac.uk` or Jiahao He in Teams. There's a submodule in whac-a-mole, called sim2vr. To pull the files, use the command below.
+First, under your working directory, clone the uitb_private and whac-a-mole repo respectively. The `uitb_private` repo is currently private, and if you need to clone it please contact `jh2425@cam.ac.uk` or Jiahao He in Teams. Note that there's a submodule in whac-a-mole, called sim2vr. To clone all the files, use the command below.
 ```bash
 https://github.com/Leahh147/whac-a-mole.git --recurse-submodules
 https://github.com/Leahh147/uitb_private.git
@@ -32,8 +32,8 @@ conda activate uitb-sim2vr
 pip install -e .
 ```
 
-## Initiate a Training Script and Submit to the HPC Centre
-Write a bash file for task submission, and note that you will need to apply for HPC resources in advance, especially the GPU node in Prof.Krestensson's group.
+## Initiate a Training Script and Submit to the HPC
+Write a bash file for task submission, and note that you will need to apply for HPC resources in advance, especially the GPU node in Prof.Kristensson's group.
 ```bash
 #! /bin/bash
 #SBATCH -A KRISTENSSON-SL3-GPU
@@ -47,7 +47,7 @@ Write a bash file for task submission, and note that you will need to apply for 
 
 cd ~/YOUR/OWN/PATH/TO/uitb_private
 
-python uitb/train/trainer.py uitb/configs/mobl_arms_whacamole_constrained.yaml > train_results_TIME.txt
+python uitb/train/trainer.py uitb/configs/mobl_arms_whacamole_constrained.yaml
 ```
 
 ## Questions

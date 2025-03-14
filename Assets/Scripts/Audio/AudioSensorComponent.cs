@@ -536,7 +536,7 @@ namespace WhacAMole.Scripts.Audio
             if (m_SettingsWatcher.SampleSizeInvalid(this) || m_SamplesL == null)
             {
                 // Would need to be adjusted for a sampling interval other than FixedUpdate.
-                SamplesPerChannel = NextPowerOf2(AudioSettings.outputSampleRate * Time.fixedDeltaTime);
+                SamplesPerChannel = NextPowerOf2(AudioSettings.outputSampleRate * 0.05f);
                 SetShapeDimensions();
 
                 m_SamplesL = new float[SamplesPerChannel];

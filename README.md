@@ -4,8 +4,8 @@ This part of the repository aims to provide help to train the simulators on univ
 ## Use conda env and Install Dependencies
 First, under your working directory, clone the uitb_private and whac-a-mole repo respectively. The `uitb_private` repo is currently private, and if you need to clone it please contact `jh2425@cam.ac.uk` or Jiahao He in Teams. Note that there's a submodule in whac-a-mole, called sim2vr. To clone all the files, use the command below.
 ```bash
-https://github.com/Leahh147/whac-a-mole.git --recurse-submodules
-https://github.com/Leahh147/uitb_private.git
+git clone https://github.com/Leahh147/whac-a-mole.git --recurse-submodules
+git clone https://github.com/Leahh147/uitb_private.git
 ```
 
 If you have already cloned `whac-a-mole` without the submodules, you can do the following step instead.
@@ -13,7 +13,7 @@ If you have already cloned `whac-a-mole` without the submodules, you can do the 
 git submodule update --init --recursive
 ```
 
-Switch to branch `iib_project` for both repo. Under `whac-a-mole/Assets/sim2vr`, switch to branch `iib_project` as well. This ensures all the changes are up-to-date.
+Switch to branch `iib_project` for the three repo(uitb_private, whac-a-mole, sim2vr). For `sim2vr`, go to corresponding folder location using the following command. This ensures all the changes are up-to-date.
 For sim2vr:
 ```bash
 cd whac-a-mole/Assets/sim2vr
@@ -38,16 +38,25 @@ Write a bash file for task submission, and note that you will need to apply for 
 #! /bin/bash
 #SBATCH -A KRISTENSSON-SL3-GPU
 #SBATCH -p ampere  ##SBATCH -p icelake-himem
-#SBATCH -J uitb_train
 #SBATCH --nodes=1
-#SBATCH --time=00:15:00
+#SBATCH --mem-per-cpu=12GB
+#SBATCH --time=50:00:00
 #SBATCH -o "HPC_%x.%j.out"
 #SBATCH -e "HPC_%x.%j.out"
 #SBATCH --gres=gpu:1   #requires "#SBATCH -A KRISTENSSON-SL3-GPU" and "#SBATCH -p ampere"
+#SBATCH --mail-user=YOUR_EMAIL
+#SBATCH --mail-type=BEGIN,END,FAIL
 
+source ~/.bashrc
+conda activate uitb-sim2vr
 cd ~/YOUR/OWN/PATH/TO/uitb_private
 
-python uitb/train/trainer.py uitb/configs/mobl_arms_whacamole_constrained.yaml
+## Create virtual display (check for existing display IDs using `ls -l /tmp/.X11-unix/`)
+export DISPLAY=:99
+# echo $DISPLAY
+xdpyinfo -display $DISPLAY > /dev/null || Xvfb $DISPLAY -screen 0 1920x1090x24 &
+
+python uitb/train/trainer.py uitb/configs/mobl_arms_whacamole_constrained_linux_train.yaml
 ```
 
 ## Questions

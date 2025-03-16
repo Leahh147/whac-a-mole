@@ -84,7 +84,7 @@ namespace UserInTheBox
                 simulatedUser.audioModeOn = true;
                 if (simulatedUser.audioModeOn) {
                     audioManager.SignalType = "Mono";
-                    audioManager.SampleType = "Spectrum";
+                    audioManager.SampleType = "Amplitude";
                     Debug.Log("Audio mode on, using signal type " + audioManager.SignalType + " and sample type " + audioManager.SampleType);
                 }
             }

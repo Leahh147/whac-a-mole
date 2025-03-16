@@ -111,7 +111,7 @@ namespace WhacAMole.Scripts.Audio
         }
         [SerializeField]
         [Tooltip("The number of FFT bands when sampling spectrum data.")]
-        private int m_FFTBitWidth = 10;
+        private int m_FFTBitWidth = 12; // 4096 bins, the same as amplitude mode
 
 
         /// <summary>

@@ -29,8 +29,8 @@
             "type": "debugpy",
             "request": "launch",
             "program": "uitb/train/trainer.py",
-            "cwd": "C:/Users/remote/leah/uitb_private",
-            "python": "C:/SHARED/miniconda3/envs/uitb-sim2vr/python.exe",
+            "cwd": "C:/Users/BFW/Documents/vscode/uitb_private",
+            "python": "C:/Users/BFW/anaconda3/envs/uitb-sim2vr/python.exe",
             "console": "integratedTerminal",
             "args": [
                 "uitb/configs/mobl_arms_whacamole_constrained_win_DEBUG.yaml"

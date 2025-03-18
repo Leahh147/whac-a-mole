@@ -50,6 +50,7 @@ public class AudioManager : MonoBehaviour
     private IEnumerator PlayAudioClip()
     {
         var clip = m_Clips[Random.Range(0, m_Clips.Count)];
+        m_AudioSource.pitch = Time.timeScale;
         m_AudioSource.PlayOneShot(clip);
         yield return new WaitForSecondsRealtime(clip.length);
         StartCoroutine(PlayAudioClip());

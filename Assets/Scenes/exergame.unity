@@ -292,6 +292,7 @@ MonoBehaviour:
   rightHandController: {fileID: 2079797182}
   mainCamera: {fileID: 1240924501}
   audioListener: {fileID: 2030378308}
+  audioModeOn: 0
   audioManager: {fileID: 1680943431}
   env: {fileID: 735238206}
   simulated: 1
@@ -2218,7 +2219,6 @@ MonoBehaviour:
   logger: {fileID: 1321310259}
   recorder: {fileID: 1333132544}
   targetArea: {fileID: 845354828}
-  audioModeOn: 0
   audioManager: {fileID: 1680943431}
 --- !u!4 &358941411
 Transform:
@@ -4446,11 +4446,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simulatedUser: {fileID: 69392035}
+  audioManager: {fileID: 1680943431}
   logger: {fileID: 1321310259}
   overrideHeadsetOrientation: 0
   simulatedUserHeadsetOrientation: {x: 0, y: 0, z: 0, w: 0}
   sequenceManager: {fileID: 358941410}
-  audioManager: {fileID: 1680943431}
   _useRewardSplines: 0
 --- !u!1 &738878423
 GameObject:
@@ -7848,7 +7848,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

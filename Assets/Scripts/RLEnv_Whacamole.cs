@@ -65,6 +65,14 @@ namespace UserInTheBox
                 _logging = UitBUtils.GetOptionalArgument("logging");
                 sequenceManager.adaptiveTargetSpawns = UitBUtils.GetOptionalArgument("adaptive");
                 _denseGameReward = !UitBUtils.GetOptionalArgument("sparse");
+                if (_denseGameReward)
+                {
+                    Debug.Log("Dense game reward enabled");
+                }
+                else
+                {
+                    Debug.Log("Sparse game reward enabled");
+                }
 
                 string fixedSeed = UitBUtils.GetOptionalKeywordArgument("fixedSeed", "0");
                 // Try to parse given fixed seed string to int

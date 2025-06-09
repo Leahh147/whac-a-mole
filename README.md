@@ -1,4 +1,14 @@
-# Whac-A-Mole
+# Whac-A-Mole(IIB Project)
+
+
+| **Design Variable** | **Options** | **Selected in This Project** |
+|---------------------|-------------|------------------------------|
+| Difficulty Mode | Easy (1 target), Medium (3), Hard (5), Random (1--5) | **Easy (1 target)** |
+| Interface Position | Low, Mid, High | **Mid** |
+| Speed Threshold | Constrained, Unconstrained | **Constrained** |
+| Target Selection | Adaptive, Non-Adaptive | **Non-Adaptive** |
+
+*Table: Design variables and selected configuration for Whac-A-Mole task*
 
 A replication of the classic "Whac-A-Mole" arcade game, implemented as a VR game in Unity. This game is largely based on another Unity (boxing) exergame developed by Toni Pesola. 
 

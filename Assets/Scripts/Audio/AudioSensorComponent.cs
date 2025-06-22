@@ -535,26 +535,27 @@ namespace WhacAMole.Scripts.Audio
         {
             if (m_SettingsWatcher.SampleSizeInvalid(this) || m_SamplesL == null)
             {
-                // Would need to be adjusted for a sampling interval other than FixedUpdate.
-                SamplesPerChannel = NextPowerOf2(AudioSettings.outputSampleRate * 0.05f);
+                float windowSec = 0.05f; // 50ms window
+                SamplesPerChannel = Mathf.RoundToInt(AudioSettings.outputSampleRate * windowSec);
+        
                 SetShapeDimensions();
-
+        
                 m_SamplesL = new float[SamplesPerChannel];
                 m_SamplesR = new float[SamplesPerChannel];
             }
-
-            // Normalization.
+        
+            // Normalization...
             if (m_SettingsWatcher.AmplitudeNormalizationInvalid(this) || HasNoAmpExpansionFactor)
             {
                 ResetNormalization();
             }
             else if (m_AmpScaledPeak == 0)
             {
-                // Restore peak from serialized factor.
                 m_AmpScaledPeak = m_AmpExpansionFactor > 1
                     ? c_Ceiling / m_AmpExpansionFactor : c_MinPeak;
             }
         }
+
 
         private void SetShapeDimensions()
         {
